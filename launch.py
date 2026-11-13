@@ -90,10 +90,18 @@ def route(peer,address):
     return json.loads(output(peer,['ip','-j','route','get',address]))[0]
 
 
+def peer_address(peer):
+    # SSH aliases need not exist in DNS; resolve the configured HostName.
+    config=output(None,['ssh','-G',peer])
+    hostname=next(line.split(None,1)[1] for line in config.splitlines() if line.startswith('hostname '))
+    return socket.gethostbyname(hostname)
+
+
 def launch(peer,args):
     state=load_state(peer)
-    address=args.head_address or route(None,socket.gethostbyname(peer.rsplit('@',1)[-1]))['prefsrc']
-    interfaces=[route(None,socket.gethostbyname(peer.rsplit('@',1)[-1]))['dev'],route(peer,address)['dev']]
+    head_route=route(None,peer_address(peer))
+    address=args.head_address or head_route['prefsrc']
+    interfaces=[head_route['dev'],route(peer,address)['dev']]
     devices=[gpu(host) for host in (None,peer)]
     for host in (None,peer):
         if output(host,['docker','image','inspect',state['image'],'--format','{{.Id}}'])!=state['image_id']:raise RuntimeError('Runtime image changed')

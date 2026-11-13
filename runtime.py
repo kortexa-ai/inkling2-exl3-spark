@@ -178,13 +178,20 @@ def worker(stage):
         else:
             send_json({"prefill": True}, 0)
 
+def encode_prompt(tokenizer, prompt):
+    # The pinned template ignores add_generation_prompt. Open the assistant's
+    # text block explicitly so a non-thinking CLI cannot start a thinking block.
+    rendered = tokenizer.apply_chat_template([{"role": "user", "content": prompt}],
+        tokenize=False, reasoning_effort="none", add_generation_prompt=False)
+    rendered += "<|message_model|><|content_text|>"
+    return tokenizer.encode(rendered, add_special_tokens=False)
+
+
 def generate(stage, args):
     from transformers import PreTrainedTokenizerFast
     tokenizer = PreTrainedTokenizerFast(tokenizer_file=str(args.checkpoint / "auxiliary/tokenizer.json"))
     tokenizer.chat_template = (args.checkpoint / "auxiliary/chat_template.jinja").read_text()
-    rendered = tokenizer.apply_chat_template([{"role": "user", "content": args.prompt}],
-        tokenize=False, reasoning_effort="none", add_generation_prompt=True)
-    ids = tokenizer.encode(rendered, add_special_tokens=False)
+    ids = encode_prompt(tokenizer, args.prompt)
     if len(ids) + args.max_tokens > args.max_context:
         raise ValueError("Prompt plus generation exceeds this bounded trial's context admission limit")
     capacity = len(ids)+args.max_tokens

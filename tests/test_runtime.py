@@ -4,10 +4,17 @@ from unittest.mock import patch
 from types import SimpleNamespace
 import torch
 sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[1]))
-import model,attention,download,launch
+import model,attention,download,launch,runtime
 
 
 class RuntimeTests(unittest.TestCase):
+    def test_non_thinking_prompt_opens_text_channel(self):
+        # The actual pinned template does not act on add_generation_prompt.
+        tokenizer=SimpleNamespace(apply_chat_template=lambda *a,**k:'<|message_user|><|content_text|>question<|end_message|>',
+                                  encode=lambda text,**k:text)
+        self.assertTrue(runtime.encode_prompt(tokenizer,'question').endswith(
+            '<|end_message|><|message_model|><|content_text|>'))
+
     def test_output_head_stays_fp32(self):
         torch.manual_seed(116)
         weights={'model.llm.attn_res.output_query':torch.zeros(32),
@@ -56,6 +63,11 @@ class RuntimeTests(unittest.TestCase):
         cmd=launch.command('peer',args)
         import shlex
         self.assertEqual(shlex.split(cmd[-1]),args)
+
+    def test_network_selection_resolves_ssh_alias_hostname(self):
+        with patch.object(launch,'output',return_value='hostname 192.0.2.17\nuser spark') as config:
+            self.assertEqual(launch.peer_address('spark-alias'),'192.0.2.17')
+        config.assert_called_once_with(None,['ssh','-G','spark-alias'])
 
 
 

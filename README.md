@@ -7,10 +7,12 @@ ordinary IP to the second host using Gloo. No RDMA configuration is required.
 This is an experimental **text-only, single-request command-line runner**.
 It loads both stages, answers one prompt and exits. Vision, speculative decoding,
 concurrent requests and an HTTP API are outside this recipe.
+The CLI requests thinking effort zero and opens the assistant text block
+explicitly so response framing does not select a thinking block.
 
 ## Requirements
 
-- Two ARM64 DGX Sparks with working NVIDIA drivers, Docker and NVIDIA Container Toolkit.
+- Two ARM64 DGX Sparks with a CUDA 13-compatible NVIDIA driver, Docker and NVIDIA Container Toolkit.
 - Bash, Python 3.12+, Git and passwordless noninteractive SSH from the head to the peer.
 - At least 125 GiB free disk per host for its model shard, plus about 45 GiB for Docker/build space.
 - Both GPUs idle. Stop any resident model before setup or inference.
@@ -76,6 +78,10 @@ throughput at 512K. Long prompts can take hours with this sequential Python
 MoE runner. The publisher's 1,048,576-token model maximum is outside this recipe;
 1M is deferred until weight optimization and separate qualification.
 
+On each GB10, the isolated check held all four global 512K caches and ran
+single-token and 128-row attention, with peak allocations of 4.19 GiB.
+Random local/global attention cases through 8K matched the arithmetic reference.
+
 The original two-Spark 8K trial used 8,128 prompt tokens and recovered early,
 middle and late needles: `orchid, 47, nebula, 42`. It generated 13 tokens in
 334.03 seconds including 324.92 seconds of prefill. Peak allocated memory was
@@ -92,6 +98,10 @@ Apache-2.0 SGLang kernels at commit
 `237ba6baf2f2409f9d82d02fae1b909ea51ffb23`.
 `source-pins.json` records hashes for every fetched build input.
 No upstream inference server is started inside the image.
+
+Native codec checks covered K2/K3 gate/up and down projections at 1, 2, 4,
+32 and 128 rows on both Sparks. Relative errors against independent fixtures
+were below 1.75e-6; NVFP4 and MXFP8 activation bytes matched exactly.
 
 CPU tests inside the built image:
 

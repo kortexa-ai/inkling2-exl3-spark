@@ -11,6 +11,7 @@ RUN python3 fetch_sources.py && \
     python3 -m pip install --no-deps --no-build-isolation --no-cache-dir upstream/build/exllamav3 && \
     rm -rf upstream/build
 COPY math_ops.py kernels.py model.py attention.py runtime.py ./
+COPY LICENSE NOTICE ./
 COPY tests/test_runtime.py tests/test_runtime.py
 COPY download.py launch.py ./
 ENV PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True

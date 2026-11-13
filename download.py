@@ -2,7 +2,7 @@
 """Download one verified 24-layer stage; no Hub SDK or credentials required."""
 import argparse,hashlib,json,os,pathlib,urllib.request
 REPOSITORY='kortexa-ai/Inkling-2-Small-EXL3-2.59bpw'
-REVISION='main'  # Replaced with the verified immutable publication commit before release.
+REVISION='05c6cd0dff9df5bf20b10419c663a1e2adc7eb64'
 MANIFEST_SHA='97d75d66d3883514450772f8a3efb348467d35157925c908ea97315ae6e3feca'
 
 
@@ -46,6 +46,8 @@ def main():
     p.add_argument('--rank',type=int,choices=(0,1),required=True)
     p.add_argument('--directory',type=pathlib.Path,required=True)
     args=p.parse_args();root=args.directory.expanduser().resolve();root.mkdir(parents=True,exist_ok=True)
+    download('NOTICE',root/'NOTICE','e71ff351f806c4f6ebd25f3c4ba9840ecd47283dc5ffcbd97829c59268369a47')
+    download('LICENSE',root/'LICENSE','1495e1e757ef4d0925a2350563cf5754bb23c51701a8ec4fb3c5cdcbedae6747')
     download('checkpoint.json',root/'checkpoint.json',MANIFEST_SHA)
     download(f'ranks/rank-{args.rank}.json',root/f'rank-{args.rank}.json')
     manifest=json.loads((root/'checkpoint.json').read_text())
