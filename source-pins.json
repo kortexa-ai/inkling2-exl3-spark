@@ -1,0 +1,34 @@
+{
+  "sglang/LICENSE": {
+    "url": "https://raw.githubusercontent.com/sgl-project/sglang/237ba6baf2f2409f9d82d02fae1b909ea51ffb23/LICENSE",
+    "sha256": "1495e1e757ef4d0925a2350563cf5754bb23c51701a8ec4fb3c5cdcbedae6747"
+  },
+  "sglang/python/sglang/kernels/ops/moe/gate_topk.py": {
+    "url": "https://raw.githubusercontent.com/sgl-project/sglang/237ba6baf2f2409f9d82d02fae1b909ea51ffb23/python/sglang/kernels/ops/moe/gate_topk.py",
+    "sha256": "9bbbe6a89810f6ea68a90dfed2dbf48da02dd1872eb51e2c9e5a9b5b5ebbe6b9"
+  },
+  "sglang/python/sglang/kernels/ops/inkling2/nvfp4.py": {
+    "url": "https://raw.githubusercontent.com/sgl-project/sglang/237ba6baf2f2409f9d82d02fae1b909ea51ffb23/python/sglang/kernels/ops/inkling2/nvfp4.py",
+    "sha256": "fa7456a08685a96ed9d22cf9ff3aaa9116e70f6bf9bb84cba36623e6d451b459"
+  },
+  "sglang/python/sglang/kernels/ops/inkling2/route.py": {
+    "url": "https://raw.githubusercontent.com/sgl-project/sglang/237ba6baf2f2409f9d82d02fae1b909ea51ffb23/python/sglang/kernels/ops/inkling2/route.py",
+    "sha256": "46b8cd021bc9c5d2a95c19574ef2a56dc7205d84c8417eadf2e805f28ca0c8b9"
+  },
+  "sglang/python/sglang/kernels/ops/inkling2/moe.py": {
+    "url": "https://raw.githubusercontent.com/sgl-project/sglang/237ba6baf2f2409f9d82d02fae1b909ea51ffb23/python/sglang/kernels/ops/inkling2/moe.py",
+    "sha256": "304d5334f6ee339d01aee943510c750a9ea44843ff9e67a62af1ef7cf04bc243"
+  },
+  "sglang/python/sglang/kernels/ops/inkling2/sconv.py": {
+    "url": "https://raw.githubusercontent.com/sgl-project/sglang/237ba6baf2f2409f9d82d02fae1b909ea51ffb23/python/sglang/kernels/ops/inkling2/sconv.py",
+    "sha256": "7de16c2de21b09874a6651d6db8cccb589a21d71105ba306f1aaab3a3f2f9321"
+  },
+  "build/exllamav3.tar.gz": {
+    "url": "https://codeload.github.com/turboderp-org/exllamav3/tar.gz/151539c77abc7ab7425d30da7a4e8e3c5c154e7b",
+    "sha256": "fb4c93f4622139a57f33c7a8b29261e86d0d3501d5470a664e1dcfef22c43c9e"
+  },
+  "build/marisa_trie-1.4.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl": {
+    "url": "https://files.pythonhosted.org/packages/15/0c/376e21c62bd0e658a5e9f6b8912f3116591778c639857ad374c7639ceebe/marisa_trie-1.4.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+    "sha256": "7bed50d39ff1391a67b9383a7f3c458a1a0cb40fe8dd16952f813fbf8939eeff"
+  }
+}

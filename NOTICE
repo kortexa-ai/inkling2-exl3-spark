@@ -1,0 +1,18 @@
+Inkling 2 Small EXL3 two-Spark adapter
+Copyright 2026 Kortexa AI. Apache License 2.0.
+
+Model weights: Thinking Machines Lab, Apache License 2.0.
+https://huggingface.co/thinkingmachines/Inkling-2-Small
+
+Selected source kernels are fetched from SGLang (Apache License 2.0),
+commit 237ba6baf2f2409f9d82d02fae1b909ea51ffb23.
+The image retains the upstream license alongside those source files.
+https://github.com/sgl-project/sglang
+
+EXL3 codec: turboderp-org/exllamav3, MIT License,
+commit 151539c77abc7ab7425d30da7a4e8e3c5c154e7b.
+The installed distribution retains its upstream license.
+https://github.com/turboderp-org/exllamav3
+
+The Docker base contains additional packages with their own licenses.
+See the pinned vllm/vllm-openai image and its installed package metadata.
