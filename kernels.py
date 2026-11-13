@@ -85,4 +85,3 @@ def discard_file_cache(path):
     # Avoid a host-wide cache flush or a privileged launcher on unified memory.
     with path.open("rb") as source:
         os.posix_fadvise(source.fileno(), 0, 0, os.POSIX_FADV_DONTNEED)
-

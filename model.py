@@ -228,4 +228,3 @@ class Checkpoint:
                     yield {key: reader.get_tensor(prefix+key)
                            for key in ("suh", "svh", "trellis", "mul1")}
             kernels.discard_file_cache(path)
-

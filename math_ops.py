@@ -42,4 +42,3 @@ def attention(q, k, v, rel, qpos, kpos, window=1023):
     lse = scores.logsumexp(-1).T
     output = torch.einsum("hts,shd->thd", scores.softmax(-1), values)
     return output, lse
-
